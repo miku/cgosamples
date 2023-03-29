@@ -18,3 +18,19 @@ extern char* _cgo_topofstack(void);
 
 #define _cgo_msan_write(addr, sz)
 
+
+CGO_NO_SANITIZE_THREAD
+void _cgo_1b32228e3b82_Cfunc__Cmalloc(void *v) {
+	struct {
+		unsigned long long p0;
+		void *r1;
+	} __attribute__((__packed__, __gcc_struct__)) *a = v;
+	void *ret;
+	_cgo_tsan_acquire();
+	ret = malloc(a->p0);
+	if (ret == 0 && a->p0 == 0) {
+		ret = malloc(1);
+	}
+	a->r1 = ret;
+	_cgo_tsan_release();
+}

@@ -16,6 +16,16 @@ func _Cgo_ptr(ptr unsafe.Pointer) unsafe.Pointer { return ptr }
 var _Cgo_always_false bool
 //go:linkname _Cgo_use runtime.cgoUse
 func _Cgo_use(interface{})
+type _Ctype__GoString_ string
+
+type _Ctype_char int8
+
+type _Ctype_intgo = _Ctype_ptrdiff_t
+
+type _Ctype_long int64
+
+type _Ctype_ptrdiff_t = _Ctype_long
+
 type _Ctype_void [0]byte
 
 //go:linkname _cgo_runtime_cgocall runtime.cgocall
@@ -27,3 +37,68 @@ func _cgoCheckPointer(interface{}, interface{})
 //go:linkname _cgoCheckResult runtime.cgoCheckResult
 func _cgoCheckResult(interface{})
 
+
+// CString converts the Go string s to a C string.
+//
+// The C string is allocated in the C heap using malloc.
+// It is the caller's responsibility to arrange for it to be
+// freed, such as by calling C.free (be sure to include stdlib.h
+// if C.free is needed).
+func _Cfunc_CString(s string) *_Ctype_char {
+	if len(s)+1 <= 0 {
+		panic("string too large")
+	}
+	p := _cgo_cmalloc(uint64(len(s)+1))
+	sliceHeader := struct {
+		p   unsafe.Pointer
+		len int
+		cap int
+	}{p, len(s)+1, len(s)+1}
+	b := *(*[]byte)(unsafe.Pointer(&sliceHeader))
+	copy(b, s)
+	b[len(s)] = 0
+	return (*_Ctype_char)(p)
+}
+//go:cgo_import_static _cgo_1b32228e3b82_Cfunc_free
+//go:linkname __cgofn__cgo_1b32228e3b82_Cfunc_free _cgo_1b32228e3b82_Cfunc_free
+var __cgofn__cgo_1b32228e3b82_Cfunc_free byte
+var _cgo_1b32228e3b82_Cfunc_free = unsafe.Pointer(&__cgofn__cgo_1b32228e3b82_Cfunc_free)
+
+//go:cgo_unsafe_args
+func _Cfunc_free(p0 unsafe.Pointer) (r1 _Ctype_void) {
+	_cgo_runtime_cgocall(_cgo_1b32228e3b82_Cfunc_free, uintptr(unsafe.Pointer(&p0)))
+	if _Cgo_always_false {
+		_Cgo_use(p0)
+	}
+	return
+}
+//go:cgo_import_static _cgo_1b32228e3b82_Cfunc_hello
+//go:linkname __cgofn__cgo_1b32228e3b82_Cfunc_hello _cgo_1b32228e3b82_Cfunc_hello
+var __cgofn__cgo_1b32228e3b82_Cfunc_hello byte
+var _cgo_1b32228e3b82_Cfunc_hello = unsafe.Pointer(&__cgofn__cgo_1b32228e3b82_Cfunc_hello)
+
+//go:cgo_unsafe_args
+func _Cfunc_hello(p0 *_Ctype_char) (r1 _Ctype_void) {
+	_cgo_runtime_cgocall(_cgo_1b32228e3b82_Cfunc_hello, uintptr(unsafe.Pointer(&p0)))
+	if _Cgo_always_false {
+		_Cgo_use(p0)
+	}
+	return
+}
+
+//go:cgo_import_static _cgo_1b32228e3b82_Cfunc__Cmalloc
+//go:linkname __cgofn__cgo_1b32228e3b82_Cfunc__Cmalloc _cgo_1b32228e3b82_Cfunc__Cmalloc
+var __cgofn__cgo_1b32228e3b82_Cfunc__Cmalloc byte
+var _cgo_1b32228e3b82_Cfunc__Cmalloc = unsafe.Pointer(&__cgofn__cgo_1b32228e3b82_Cfunc__Cmalloc)
+
+//go:linkname runtime_throw runtime.throw
+func runtime_throw(string)
+
+//go:cgo_unsafe_args
+func _cgo_cmalloc(p0 uint64) (r1 unsafe.Pointer) {
+	_cgo_runtime_cgocall(_cgo_1b32228e3b82_Cfunc__Cmalloc, uintptr(unsafe.Pointer(&p0)))
+	if r1 == nil {
+		runtime_throw("runtime: C malloc failed")
+	}
+	return
+}

@@ -8,15 +8,17 @@ package main
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_name(char* s)
+void hello(char* s)
 {
-    printf("%s\n", s);
+    printf("hello %s\n", s);
 }
 
 */
 import _ "unsafe"
-import "fmt"
+import "unsafe"
 
 func main() {
-	fmt.Println("vim-go")
+	cs := ( /*line :18:8*/_Cfunc_CString /*line :18:16*/)("gopher")
+	( /*line :19:2*/_Cfunc_hello /*line :19:8*/)(cs)
+	func() { _cgo0 := /*line :20:9*/unsafe.Pointer(cs); _cgoCheckPointer(_cgo0, nil); /*line :20:28*/_Cfunc_free(_cgo0); }()
 }

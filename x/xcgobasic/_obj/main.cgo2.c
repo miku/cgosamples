@@ -27,9 +27,9 @@ static const char *_GoStringPtr(_GoString_ s) { return s.p; }
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_name(char* s)
+void hello(char* s)
 {
-    printf("%s\n", s);
+    printf("hello %s\n", s);
 }
 
 
@@ -76,4 +76,28 @@ extern char* _cgo_topofstack(void);
 
 
 #define _cgo_msan_write(addr, sz)
+
+CGO_NO_SANITIZE_THREAD
+void
+_cgo_1b32228e3b82_Cfunc_free(void *v)
+{
+	struct {
+		void* p0;
+	} __attribute__((__packed__, __gcc_struct__)) *_cgo_a = v;
+	_cgo_tsan_acquire();
+	free(_cgo_a->p0);
+	_cgo_tsan_release();
+}
+
+CGO_NO_SANITIZE_THREAD
+void
+_cgo_1b32228e3b82_Cfunc_hello(void *v)
+{
+	struct {
+		char* p0;
+	} __attribute__((__packed__, __gcc_struct__)) *_cgo_a = v;
+	_cgo_tsan_acquire();
+	hello(_cgo_a->p0);
+	_cgo_tsan_release();
+}
 

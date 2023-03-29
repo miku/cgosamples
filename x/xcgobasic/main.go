@@ -5,15 +5,17 @@ package main
 #include <stdio.h>
 #include <stdlib.h>
 
-void print_name(char* s)
+void hello(char* s)
 {
-    printf("%s\n", s);
+    printf("hello %s\n", s);
 }
 
 */
 import "C"
-import "fmt"
+import "unsafe"
 
 func main() {
-	fmt.Println("vim-go")
+	cs := C.CString("gopher")
+	C.hello(cs)
+	C.free(unsafe.Pointer(cs))
 }
