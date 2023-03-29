@@ -1,2 +1,3 @@
-# cgosamples
-Cgo samples
+# C and Go
+
+
