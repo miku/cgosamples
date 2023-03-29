@@ -81,4 +81,81 @@ Part of ELF.
 
 * [https://refspecs.linuxfoundation.org/elf/elf.pdf](https://refspecs.linuxfoundation.org/elf/elf.pdf)
 
+## Linking
+
+In order to link the file, we need ld(1).
+
+* https://stackoverflow.com/a/62562907/89391
+
+Trace the execution of `gcc` to uncover ld options.
+
+```
+524430 execve("/usr/bin/ld", ["/usr/bin/ld", "-plugin",
+"/usr/lib/gcc/x86_64-linux-gnu/11/liblto_plugin.so",
+"-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/11/lto-wrapper",
+"-plugin-opt=-fresolution=/tmp/ccDFiuPU.res",
+"-plugin-opt=-pass-through=-lgcc", "-plugin-opt=-pass-through=-lgcc_s",
+"-plugin-opt=-pass-through=-lc", "-plugin-opt=-pass-through=-lgcc",
+"-plugin-opt=-pass-through=-lgcc_s", "--build-id", "--eh-frame-hdr", "-m",
+"elf_x86_64", "--hash-style=gnu", "--as-needed", "-dynamic-linker",
+"/lib64/ld-linux-x86-64.so.2", "-pie", "-z", "now", "-z", "relro", "-o",
+"main", "/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o",
+"/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o",
+"/usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o",
+"-L/usr/lib/gcc/x86_64-linux-gnu/11",
+"-L/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu",
+"-L/usr/lib/gcc/x86_64-linux-gnu/11/../../../../lib",
+"-L/lib/x86_64-linux-gnu", "-L/lib/../lib", "-L/usr/lib/x86_64-linux-gnu",
+"-L/usr/lib/../lib", "-L/usr/lib/gcc/x86_64-linux-gnu/11/../../..",
+"/tmp/ccz6cjWH.o", "-lgcc", "--push-state", "--as-needed", "-lgcc_s",
+"--pop-state", "-lc", "-lgcc", "--push-state", "--as-needed", "-lgcc_s",
+"--pop-state", "/usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o",
+"/usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o"],
+0x7ffe95b22770 /* 101 vars */) = 0
+```
+
+Trying:
+
+```
+$ ld -o main main.o -lc -pie --build-id -m elf_x86_64 -e main -dynamic-linker /lib64/ld-linux-x86-64.so.2
+$ ./main # core dump
+```
+
+* Core dumps: https://unix.stackexchange.com/questions/277331/segmentation-fault-core-dumped-to-where-what-is-it-and-why
+
+```
+$ ulimit -c
+```
+
+If 0, no core file is written.
+
+Some scripts used by LD are in `/lib/x86_64-linux-gnu/ldscripts/`.
+
+Before `main` is called, `_start` is called, and that is called by `sysdeps/x86_64/elf/start.S` - the `_start` symbol lives in `crt0.o`.
+
+* https://renenyffenegger.ch/notes/development/languages/C-C-plus-plus/C/libc/src/sysdeps/x86_64/elf/start_S
+
+```
+$ objdump -t /lib/x86_64-linux-gnu/crt1.o
+
+/lib/x86_64-linux-gnu/crt1.o:     file format elf64-x86-64
+
+SYMBOL TABLE:
+0000000000000000 l    d  .text  0000000000000000 .text
+0000000000000000 l     O .note.ABI-tag  0000000000000020 __abi_tag
+0000000000000030 g     F .text  0000000000000005 .hidden _dl_relocate_static_pie
+0000000000000000 g     F .text  0000000000000026 _start
+0000000000000000         *UND*  0000000000000000 main
+0000000000000000  w      .data  0000000000000000 data_start
+0000000000000000         *UND*  0000000000000000 _GLOBAL_OFFSET_TABLE_
+0000000000000000 g     O .rodata.cst4   0000000000000004 _IO_stdin_used
+0000000000000000         *UND*  0000000000000000 __libc_start_main
+0000000000000000 g       .data  0000000000000000 __data_start
+
+```
+
+* [\_start:](http://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/x86_64/elf/start.S;h=3c2caf9d00a0396ef2b74adb648f76c6c74ff65f;hb=cvs/glibc-2_9-branch#l62)
+
+ABI layer.
+
 
