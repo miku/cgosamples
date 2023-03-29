@@ -1,5 +1,7 @@
 # C: object and shared object files
 
+![](static/stripped.png)
+
 ```
 $ file main.o
 main.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
