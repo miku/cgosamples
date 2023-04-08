@@ -26,6 +26,9 @@ SYMBOL TABLE:
 
 There are symbol and dynamic symbol tables. More headers.
 
+Notes: `l` local, `g` global, address (all zero for filename and sections),
+size (all zero for sections); size of `print_name` is 2e, 46 bytes.
+
 ```
 $ objdump -x main.o
 
@@ -80,6 +83,26 @@ Sections:
 Part of ELF.
 
 * [https://refspecs.linuxfoundation.org/elf/elf.pdf](https://refspecs.linuxfoundation.org/elf/elf.pdf)
+
+Notes:
+
+* `HAS_RELOC`: This flag indicates that the object file has relocation entries.
+Relocation entries are used to modify addresses in the object file to account
+for the location of the object in memory at runtime. Relocation entries are
+necessary when an object file is linked with other object files to create an
+executable or shared library. If `HAS_RELOC` is not present, it means that the
+object file has no relocation entries.
+* `HAS_SYMS`: This flag indicates that the object file has symbol table entries.
+Symbol table entries contain information about symbols in the object file, such
+as function and variable names and their associated addresses. Symbol table
+entries are used by linkers to resolve symbol references between different
+object files. If `HAS_SYMS` is not present, it means that the object file has no
+symbol table entries.
+
+> Both `HAS_RELOC` and `HAS_SYMS` are typically set for object files that are
+> intended to be linked with other object files to create an executable or
+> shared library. They are not relevant for standalone object files that are
+> not intended to be linked with other object files.
 
 ## Linking
 
