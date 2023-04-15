@@ -24,17 +24,17 @@ uint32_t lcg_parkmiller(uint32_t* state) {
   return *state = (uint64_t)*state * 48271 % 0x7fffffff;
 }
 
-int_fast8_t flip(uint32_t r) {
+int_fast8_t lsb(uint32_t r) {
   return r & 1;
 }
 
-// rwalk implements a random walk on n steps, starting at 0.
+// rwalk implements a random walk over n steps, starting at 0.
 uint64_t rwalk(uint64_t n) {
   srand(time(NULL));
   uint32_t state = rand();
   int64_t i = 0, j = 0;
   for (i = 0; i < n; i++) {
-    if (flip(lcg_parkmiller(&state)) == 0) {
+    if (lsb(lcg_parkmiller(&state)) == 0) {
       j--;
     } else {
       j++;
