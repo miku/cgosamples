@@ -1,4 +1,5 @@
 main: main.go librect.so
+	# don't forget to run with LD_LIBRARY_PATH=.
 	go build -o main main.go
 
 .PHONY: fmt
