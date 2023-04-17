@@ -1,15 +1,13 @@
-#ifndef RECT_FILE_H
-#define RECT_FILE_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class Rectangle {
-public:
-    Rectangle(int, int);
-    ~Rectangle();
-    void set_values(int, int);
-    int area(void);
+typedef void* Rect;
 
-private:
-    int width, height;
-};
+void* rect_new(int w, int h);
 
-#endif // RECT_FILE_H
+int rect_area(void *handle);
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,4 +1,4 @@
-#include "rect.h"
+#include "rect.hpp"
 
 Rectangle::Rectangle(int w, int h)
 {
@@ -16,5 +16,4 @@ void Rectangle::set_values(int w, int h)
 int Rectangle::area(void)
 {
     return width * height;
-}
-;
+};
