@@ -3,4 +3,4 @@ main: main.go
 
 .PHONY: clean
 clean:
-	rm -main
+	rm -f main

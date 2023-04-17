@@ -52,10 +52,9 @@ func main() {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
-			fmt.Printf("{\"i\": %d, \"tid\": %d, \"pid\": %d}\n",
+			fmt.Printf("{\"i\": %d, \"thread_id\": %d, \"pid\": %d}\n",
 				i, C.gettid(), os.Getpid())
 		}(i)
 	}
 	wg.Wait()
-	fmt.Printf("{\"tid\": %d, \"pid\": %d}\n", C.gettid(), os.Getpid())
 }
