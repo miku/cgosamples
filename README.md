@@ -11,4 +11,10 @@ struct containing the first union member and perhaps additional padding.  C
 arrays become Go arrays.  C pointers become Go pointers.  C function pointers
 become Go's uintptr.  C void pointers become Go's unsafe.Pointer.
 
+## Debug
 
+* https://github.com/golang/go/issues/26288#issuecomment-403554021
+
+```
+GODEBUG=cgocheck=2
+```
