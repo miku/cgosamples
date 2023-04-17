@@ -1,5 +1,10 @@
 # Go to C++
 
+> It is feasible and not hard, but the C++ functionality needs to be
+mapped through a C layer.
+https://groups.google.com/g/golang-nuts/c/jl5TLFQlVjI/m/JZ48mxoqDqAJ (Oct 14,
+2014, 9:19:22 AM)
+
 Not directly possible. Need to wrap manually, or via SWIG.
 
 ```
