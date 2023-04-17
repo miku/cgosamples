@@ -8,5 +8,8 @@ Rect rect_new(int w, int h)
 }
 
 int rect_area(void* handle) {
+    // https://en.cppreference.com/w/cpp/language/reinterpret_cast
+    // It is purely a compile-time directive which instructs the compiler to
+    // treat expression as if it had the type new-type.
     return reinterpret_cast<Rectangle*>(handle)->area();
 }
