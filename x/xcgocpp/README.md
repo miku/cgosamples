@@ -22,6 +22,14 @@ In file included from ./main.go:4:
 
 * [Unknown type name class](https://stackoverflow.com/a/16564736/89391)
 
+## Reinterpret Cast
+
+> [When to use reinterpret_cast?](https://stackoverflow.com/questions/573294/when-to-use-reinterpret-cast), 590 up, viewed 450K times
+
+There:
+
+> For casting to and from `void*`, `static_cast` should be preferred.
+
 ## Symbols
 
 Since C++ name-mangles symbols, we need a C bridge.
