@@ -33,7 +33,7 @@ become Go's uintptr.  C void pointers become Go's unsafe.Pointer.
 
 ## Basic example
 
-> [x/xcgobasic](x/xcgobasic)
+* [x/xcgobasic](x/xcgobasic)
 
 * preamble, with function
 * stdlib
@@ -44,7 +44,7 @@ Helper functions:
 
 ## The cgo tool
 
-> [x/xcgotool](x/xcgotool)
+* [x/xcgotool](x/xcgotool)
 
 ## Pointers
 
