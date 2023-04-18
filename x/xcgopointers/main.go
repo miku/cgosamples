@@ -10,7 +10,6 @@ void print_i(void *v) {
 	// free(v); // free(): invalid pointer
 }
 
-
 */
 import "C"
 import (

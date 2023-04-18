@@ -52,6 +52,7 @@ func main() {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
+			// runtime.LockOSThread() // ! > NumCPU
 			fmt.Printf("{\"i\": %d, \"thread_id\": %d, \"pid\": %d}\n",
 				i, C.gettid(), os.Getpid())
 		}(i)
