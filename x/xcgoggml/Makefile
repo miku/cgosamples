@@ -1,7 +1,7 @@
 main: main.go libggml.so
 	go build -o main main.go
 
-libggml.so: ggml.c
+libggml.so: ggml.c ggml.h
 	# https://explainshell.com/explain?cmd=gcc+-shared+-fPIC+-Wall+-g+ggml.c+-L.+-lm+-o+libggml.so
 	gcc -shared -fPIC -Wall -g ggml.c -L . -lm -o libggml.so
 
