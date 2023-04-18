@@ -45,4 +45,5 @@ func main() {
 	C.ggml_graph_compute(ctx, &gf)
 	result := C.ggml_get_f32_1d(f, C.int(0))
 	log.Printf("%v", result)
+	log.Printf("used mem=%v", C.ggml_used_mem(ctx))
 }
