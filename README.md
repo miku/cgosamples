@@ -1,5 +1,6 @@
-# C and Go
+# Cgo Experiments
 
+* [Slides](Slides.md)
 * pseudo-package "C"
 
 > Cgo recognizes any use of a qualified identifier C.xxx and uses gcc to
@@ -20,6 +21,8 @@ GODEBUG=cgocheck=2
 ```
 
 ## GOAMD64 and friends
+
+Optimizations.
 
 * [https://pkg.go.dev/cmd/go#hdr-Environment_variables](https://pkg.go.dev/cmd/go#hdr-Environment_variables)
 * [https://www.reddit.com/r/golang/comments/uev6o6/performance_benefits_of_the_new_goamd64_in_the/](https://www.reddit.com/r/golang/comments/uev6o6/performance_benefits_of_the_new_goamd64_in_the/)
