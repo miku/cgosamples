@@ -13,14 +13,18 @@ void f(int vs[], int c) {
 
 */
 import "C"
-import (
-	"unsafe"
-)
 
 func main() {
-	s := make([]int, 10)
+	s := make([]int, 10) // TODO: need to change something here
 	for i := 0; i < len(s); i++ {
-		s[i] = 8
+		s[i] = i
 	}
-	C.f((*C.int)(unsafe.Pointer(&s[0])), C.int(len(s)))
+	// Cannot do this.
+	// C.f((*C.int)(&s[0]), C.int(len(s))) // invalid conversion
+
+	// One would might expect this to work?  https://pkg.go.dev/reflect#SliceHeader
+	// C.f((*C.int)(unsafe.Pointer(&s)), C.int(len(s)))
+
+	// Actually, we want to point to the first element.
+	// C.f((*C.int)(unsafe.Pointer(&s[0])), C.int(len(s)))
 }
