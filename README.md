@@ -1,6 +1,6 @@
 # Cgo Experiments (WIP)
 
-Lightning Talk at [Leipzig Gophers](https://golangleipzig.space) [#35](#), 2023-04-18 1900 CEST, Basislager Leipzig
+Lightning Talk at [Leipzig Gophers](https://golangleipzig.space) [#35](https://golangleipzig.space/posts/meetup-35-wrapup/), 2023-04-18 1900 CEST, Basislager Leipzig
 
 > [Slides](Slides.md)
 
